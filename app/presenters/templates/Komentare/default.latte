@@ -1,0 +1,30 @@
+{** @author Tomáš Keske *}
+
+{layout '../Admin/default1.latte'}
+
+{block title} Správce komentářů{/block}
+
+{block obsah}
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+
+            {foreach $flashes as $flash}
+              <div class="alert alert-{$flash->type}">{$flash->message}</div>
+            {/foreach}
+
+            <h2>Komentáře ke schválení</h2>
+
+            {foreach $coment as $com}
+              Nick: {$com->nick}<br>
+              Reagoval na: <a n:href="Zobraz:clanek $com->ref->title">{$com->ref->title}</a><br>
+              Publikováno: {$com->date}<br>
+              Komentář: <b>{$com->obsah}</b> <a n:href="Komentare:Approve $com->id" class="nav-link js-scroll-trigger">Schválit komentář</a>
+            {/foreach}
+
+          </div>
+        </div>
+      </div>
+    </section>
+{/block}

@@ -1,0 +1,84 @@
+{** @author Tomáš Keske *}
+{layout default1.latte}
+{block title} Celkové výsledky {/block}
+{block obsah}
+    <section id="about">
+      <div class="container">
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">
+                 <img src="/images/logo.png" width="100%" height="100%">
+
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">     
+                 <center>  <a n:href="Result:default" class="btn btn-primary"><< Zpět na závody</a></center>
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row">           
+          <div class="col-lg-8 mx-auto">
+              
+              {dump $tymy}
+              
+                 
+                 {ifset $tymy}
+                     
+                 {var poradi = 1}
+                 
+                 {foreach $tymy as $key => $polozka}
+                     
+                     <h3>{$poradi}. místo - Tým: {$key} - {$polozka["body"]} bodů</h3>
+                     
+                     <br>
+                     <table class="table table-striped table-responsive-sm">
+                        <tr>
+                        <th> Pořadí  </th>
+                        <th> Startovní číslo závodníka </th>
+                        <th> Jméno závodníka </th>
+                        <th> Značka vozu </th>
+                        <th> Objem </th>
+                        <th> Výsledné body </th>
+                        </tr>
+                        
+                        {var cnt = 1}
+                        {foreach $polozka["zavodnici"] as $p}
+                           <tr>
+                               <td>{if $p->status == null }{$cnt}{else}DSQ{/if}</td>
+                               <td>{$p->cislo}</td>
+                               <td>{$p->jmeno}</td>
+                               <td>{$p->znacka}</td>
+                               <td>{$p->objem}</td>
+                               {var zavodnikBody = 0}
+                               {foreach $p->body as $b}
+                                   {var zavodnikBody = $zavodnikBody + $b->body}
+                               {/foreach}
+                               <td> {$zavodnikBody} </td>
+                           </tr>
+                           {var cnt = $cnt + 1}
+                        {/foreach}
+                    </table>
+                    
+                     
+                    
+                    {var poradi = $poradi + 1}
+                    
+                 {/foreach}
+                 {/ifset}
+                 </div>
+                 
+      
+          </div>
+        </div>
+      </div>
+    </section>

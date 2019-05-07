@@ -1,0 +1,647 @@
+{** @author Tomáš Keske *}
+
+{layout default1.latte}
+
+{block title}Kontrola - {$etapa->name}{/block}
+
+{block obsah}
+
+    <section id="about">
+      <div class="container">
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">
+                 <img src="/images/logo.png" width="100%" height="100%">
+
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">     
+                 <center>
+                     {if $presenter->getUser()->isInRole("admin") }
+                        <a n:href="Admin:zavod $etapa->ref->id" class="btn btn-primary"> << Zpět na etapu </a>
+                    {/if}
+                 </center>
+            </div>
+             <div class="col">
+            </div>
+        </div>
+                 
+                 
+          {if $obyc}
+     
+          <div class="row">
+          <div class="col-lg-8 mx-auto">
+              <h2>Kontrola: {$etapa->name}</h2>
+              {if !$jeUkoncena }
+              <center> <a id="uk" n:href="ukoncitKontrolu!" class="btn btn-danger">Ukončit kontrolu</a> </center>
+              {else}
+              <center><h2><font color="red" >Kontrola byla ukončena</font></h2></center>
+              {/if}
+              </div>
+          </div>
+              
+          {if !$jeUkoncena}
+          <br><br>
+          {/if}
+         
+          
+          <script>
+              
+              $("#uk").on('click', function(e) {
+                  
+                if(confirm("Opravdu chcete ukončit kontrolu?")){
+                    
+                } else {
+                    e.preventDefault()  
+                }
+              });
+              
+              function zobrazStanovit(){
+                  $("#row1").show();
+                  $("#row0").show();
+                  $("#opravaCasu").show();
+                  $("#casDojezdu").show();
+                  $("#vysledky").show();
+                  $("#body").show();
+                  $("#row2").hide();;
+                  $("#row3").hide();
+                  $("#row4").hide();
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#button").hide();
+                  $("#poradi").hide();
+              }
+              
+
+              
+            function zobrazitOpravuCasu(){
+                  $("#row3").show();
+                  $("#row4").show();
+                  $("#opravaCasu").show();
+                  $("#casDojezdu").show();
+                  $("#vysledky").show();
+                  $("#body").show();
+                  $("#row2").hide();;
+                  $("#row1").hide();;
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#button").hide();
+                  $("#poradi").hide();
+              }
+              
+            function zobrazCasDojezdu(){
+                  $("#row2").show();
+                  $("#row4").hide();
+                  $("#row3").hide();
+                  $("#opravaCasu").show();
+                  $("#casDojezdu").show();;
+                  $("#vysledky").show();
+                  $("#body").show();
+                  $("#row1").hide();;
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#button").show();
+                  $("#poradi").show();
+              }
+              
+            function zobrazVysledky(){
+                  $("#row5").show();
+                  $("#row2").hide();
+                  $("#row4").show();
+                  $("#row3").show();
+                  $("#row6").hide();
+                  $("#opravaCasu").show();
+                  $("#casDojezdu").show();
+                  $("#body").show();;
+                  $("#vysledky").show();
+                  $("#row1").hide();
+                  $("#button").hide();
+                  $("#poradi").hide();
+            }
+            
+            function pridatBody(){
+                  $("#row6").show();
+                  $("#row5").hide();
+                  $("#row2").hide();
+                  $("#row4").hide();
+                  $("#row3").hide();
+                  $("#opravaCasu").show();
+                  $("#casDojezdu").show();
+                  $("#body").show();;
+                  $("#vysledky").show();
+                  $("#row1").hide();
+                  $("#button").hide();
+                  $("#poradi").hide();
+            }
+              
+              
+          </script>
+
+            
+        <div class="row" id ="row2">
+          <div class="col">
+
+          </div>
+          <div class="col-lg-8 mx-auto">
+              
+            {foreach $flashes as $flash}
+              <div class="alert alert-{$flash->type}">{$flash->message}</div>
+            {/foreach}
+            
+            {if !$jeUkoncena}
+            
+            <h2>Uložit cas dojezdu závodníka:</h2>
+            
+            <br><br>
+           {form cas, class => "form-group form-horizontal"}
+               {label cislo}
+               {input cislo, class => "form-control", style => "width: 25%;"}
+               <br><br>
+               {input submit, class => "btn btn-primary" }
+           {/form}
+
+            {/if}
+            </div>
+            
+            {if !$jeUkoncena }
+            <div class="col">
+                <h2> Časomíra: </h2>
+                
+                <center><strong><p class="time"></p></strong></center>
+                <script>
+                   
+                    function displayTime() {
+                        var dt = new Date();
+						$(".time").html(dt.toLocaleTimeString());
+                        setTimeout(displayTime, 1000);
+                    }
+                    
+                    setTimeout(displayTime, 1000);
+
+                </script>
+            </div>
+            {/if}
+          </div>
+            
+          <br><br><br>
+            
+          <div class="row" id="poradi">
+          <div class="col-lg-8 mx-auto">
+
+             {snippet vysledky}
+                <h2>Historie průjezdů</h2>
+                <br><br>
+                <table class="table table-striped table-responsive-sm">
+                 <tr>
+                 <th> Číslo závodníka </th>
+                 <th> Jméno závodníka </th>
+                 <th> Čas projetí </th>
+                 <th> Penalizace </th>
+                 </tr>
+
+                 
+                 {ifset $results}
+                 {var cnt = 1}
+                 
+                 {foreach $results as $key => $polozka}
+                    <tr>
+                        <td>{$polozka["zavodnik"]->cislo}</td>
+                        <td>{$polozka["zavodnik"]->jmeno}</td>
+                        <td>{$polozka["prujezd"]->format("H:i:s")}</td>
+                        <td> {$polozka["body"]}</td>
+                    </tr>
+                 {/foreach}
+                 {/ifset}
+               </table>
+            {/snippet}
+          </div>    
+          </div>
+          
+          <div class="row" id ="button">
+          <div class="col-lg-8 mx-auto">
+                <br><br>
+
+               {* <a n:href="refresh! $etapa->id" id="link_ref" class="btn btn-primary refresh ajax">Refresh výsledků</a> *}
+            </div>
+          </div>
+
+          {*
+          <script>
+                var interval = setInterval(refresh, 5000);
+                function refresh() {
+                    var r = document.getElementById('link_ref');
+                    r.click();
+                }
+                function nullTimer() {
+                    clearInterval(interval);
+                }
+
+          </script>
+          *}
+            
+        <div class="row" id ="row3" style="display:none;">
+          <div class="col-lg-8 mx-auto">
+            <h2>Opravit čas manuálně</h2>
+                <br>
+                {form opravitCas, class => "form-group form-horizontal"}
+                    {label cislo}
+                    {input cislo, class => "form-control", style => "width: 25%;"}
+                    {label cas}
+                    {input cas, class => "form-control", style => "width: 25%;"}
+                    <br><br>
+                    {input submit, class => "btn btn-primary" }
+                {/form}
+                    
+                <script>
+                    $(function () {
+                        $('#frm-opravitCas-cas').datetimepicker();
+                      });
+                </script>
+            </div>
+          </div>
+        
+        {ifset $historie}
+         <div class="row" id ="row4" style="display:none;">
+          <div class="col-lg-8 mx-auto">
+            <h2>Historie oprav časů pro tuto etapu:</h2>
+                <br>
+                
+                <table class="table table-striped table-responsive-sm">
+                 <tr>
+                 <th> Číslo opravy  </th>
+                 <th> Jméno závodníka </th>
+                 <th> Číslo závodníka </th>
+                 <th> Původní zadaný čas </th>
+                 <th> Aktuální změněný čas</th>
+                 </tr>
+                 
+                 {var cnt = 1}
+                 
+                 {foreach $historie as $polozka}
+                    {if isset($polozka["zavodnik"]->jmeno)}
+                    <tr>
+                        <td>{$cnt}</td>
+                        <td>{$polozka["zavodnik"]->jmeno}</td>
+                        <td>{$polozka["zavodnik"]->cislo}</td>
+                        <td>{$polozka["historie"]->puvodniCas->format("d.m.Y H:i:s")}</td>
+                        <td>{$polozka["historie"]->zmenenyCas->format("d.m.Y H:i:s")}</td>
+                    </tr>
+                    {var cnt = $cnt + 1}
+                    {/if}
+                 {/foreach}
+               </table>
+            </div>
+          </div> 
+        {/ifset}
+    {/if}
+        
+    {if $bezcasu}
+        
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+              <center><h2>Kontrola: {$etapa->name}</h2></center>
+              <br><br>
+          </div>
+        </div>
+            
+        <div class="row" id="row1">
+          <div class="col-lg-8 mx-auto">
+              <center>
+            {foreach $control["projel"]->errors as $error}
+              <div class="alert alert-danger">{$error}</div>
+            {/foreach}
+              
+            {if !$jeUkoncena} 
+              <h4> Projetí kontrolou </h4>
+               {form projel, class => "form-group form-horizontal"}
+                   {label cislo}
+                   {input cislo, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}   
+              <br><br>
+              <center> <a n:href="ukoncitProjeti! $etapa->id" class="btn btn-danger">Ukončit kontrolu na tomto stanovišti</a>
+              <br><br><br>
+               </center>
+              {else}
+                  <center><h4><font color="red"> Kontrola byla ukončena </font></h4></center>
+               {/if}
+                      
+               <h2>Kontrolou projeli: </h2>
+                <br>
+                <table class="table table-striped table-responsive-sm">
+                 <tr>
+                 <th> Pořadí </th>
+                 <th> Startovní číslo</th>
+                 <th> Jméno </th>
+                 <th> Značka </th>
+                 </tr>
+                 
+                 {ifset $projetiZavodnici}
+                 {var cnt = count($projetiZavodnici) }
+                 {foreach $projetiZavodnici as $polozka}
+                    <tr>
+                        <td>{$cnt}</td>
+                        <td> {$polozka->cislo}</td>
+                        <td> {$polozka->jmeno}</td>
+                        <td> {$polozka->znacka}</td>
+                    </tr>
+                    {var cnt = $cnt-1 }
+                 {/foreach}
+                 {/ifset}
+               </table>
+  
+            </div>
+        </div>
+    {/if}
+        
+    {if $externi}
+            
+        <div class="row" >
+          <div class="col-lg-8 mx-auto">
+          <table class="table table-striped table-responsive-sm">
+              <th><a id="import" class="active" href=javascript:importVysledku()>Import výsledků</a></th>
+              <th><a id="vysledky" class="active" href=javascript:vysledky()>Výsledky</a></th>
+          </table>
+          </div>
+        </div>
+              
+        <script>
+            function importVysledku(){
+                $("#import").show();
+                $("#vysledky").show();
+                $("#row0").hide();
+                $("#row1").show();
+                $("#row2").hide();
+            }
+            
+            function vysledky(){
+                $("#import").show();
+                $("#vysledky").show();
+                $("#row0").hide();
+                $("#row1").hide();
+                $("#row2").show();
+            }
+        </script>
+        
+        <br><br>
+        
+        <div class="row" id="row0">
+          <div class="col-lg-8 mx-auto">
+            {foreach $flashes as $flash}
+              <div class="alert alert-{$flash->type}">{$flash->message}</div>
+            {/foreach}
+
+
+            </div>
+        </div>
+           
+            <br><br>    
+        <div class="row" id="row1">
+          <div class="col-lg-8 mx-auto">
+              
+            {foreach $control["uploadCsv"]->errors as $error}
+              <div class="alert alert-danger">{$error}</div>
+            {/foreach}
+              
+              <h4> Import výsledků </h4>
+               {form uploadCsv, class => "form-group form-horizontal"}
+                   {label file}
+                   {input file, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+
+
+            </div>
+        </div>
+ 
+    {ifset $pbr}
+        <div class="row" id="row2" style="display:none;">
+          <div class="col-lg-8 mx-auto">
+              
+            <h2>Výsledky tohoto měření: </h2>
+                <br>
+                <table class="table table-striped table-responsive-sm">
+                 <tr>
+                 <th> Pořadí </th>
+                 <th> Jméno </th>
+                 <th> Startovní číslo</th>
+                 <th> Značka </th>
+                 <th> Čas 1. jízdy </th>
+                 <th> Čas 2. jízdy </th>
+                 <th> Rozdíl časů </th>
+                 <th> Body </th>
+                 </tr>
+                 
+                 {var cnt = 1}
+                 {foreach $pbr as $polozka}
+                    <tr>
+                        <td>{$cnt}</td>
+                        <td> {$polozka["zavodnik"]->jmeno}</td>
+                        <td> {$polozka["zavodnik"]->cislo}</td>
+                        <td> {$polozka["zavodnik"]->znacka}</td>
+                        <td> {$polozka["1jizda"]}</td>
+                        <td> {$polozka["2jizda"]}</td>
+                        <td> {$polozka["rozdil"]}</td>
+                        
+                        <td> {$polozka["body"]}</td>
+                    </tr>
+                    {var cnt = $cnt +1 }
+                 {/foreach}
+               </table>
+
+
+            </div>
+        </div>
+    {/ifset}
+        
+    {/if}
+            
+            
+    {if $jizdaPravidelnosti}
+            
+        <div class="row" >
+          <div class="col-lg-8 mx-auto">
+          <table class="table table-striped table-responsive-sm">
+              <th><a id="import" class="active" href=javascript:importVysledku()>Import výsledků</a></th>
+              <th><a id="vysledky" class="active" href=javascript:vysledky()>Výsledky</a></th>
+          </table>
+          </div>
+        </div>
+              
+        <script>
+            function importVysledku(){
+                $("#import").show();
+                $("#vysledky").show();
+                $("#row0").hide();
+                $("#row1").show();
+                $("#row2").hide();
+            }
+            
+            function vysledky(){
+                $("#import").show();
+                $("#vysledky").show();
+                $("#row0").hide();
+                $("#row1").hide();
+                $("#row2").show();
+            }
+        </script>
+        
+        <br><br>
+        
+        <div class="row" id="row0">
+          <div class="col-lg-8 mx-auto">
+            {foreach $flashes as $flash}
+              <div class="alert alert-{$flash->type}">{$flash->message}</div>
+            {/foreach}
+
+
+            </div>
+        </div>
+           
+            <br><br>    
+        <div class="row" id="row1">
+          <div class="col-lg-8 mx-auto">
+              
+            {foreach $control["jP"]->errors as $error}
+              <div class="alert alert-danger">{$error}</div>
+            {/foreach}
+              
+              <h4> Import výsledků </h4>
+               {form jP, class => "form-group form-horizontal"}
+                   {label file}
+                   {input file, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+
+
+            </div>
+        </div>
+ 
+    {ifset $pbr}
+        <div class="row" id="row2" style="display:none;">
+          <div class="col-lg-8 mx-auto">
+              
+            <h2>Výsledky tohoto měření: </h2>
+                <br>
+                <table class="table table-striped table-responsive-sm">
+                 <tr>
+                 <th> Pořadí </th>
+                 <th> Jméno </th>
+                 <th> Startovní číslo</th>
+                 <th> Značka </th>
+                 <th> Čas jízdy </th>
+                 <th> Body </th>
+                 </tr>
+                 
+                 {var cnt = 1}
+                 {foreach $jps as $polozka}
+                    <tr>
+                        <td>{$cnt}</td>
+                        <td> {$polozka["zavodnik"]->jmeno}</td>
+                        <td> {$polozka["zavodnik"]->cislo}</td>
+                        <td> {$polozka["zavodnik"]->znacka}</td>
+                        <td> {$polozka["cas"]}</td>
+                        <td> {$polozka["body"]}</td>
+                    </tr>
+                    {var cnt = $cnt +1 }
+                 {/foreach}
+               </table>
+
+
+            </div>
+        </div>
+    {/ifset}
+        
+        {/if}
+            
+            
+    {if $dovednostniKontrola}
+            
+    
+        <div class="row" id="row0">
+          <div class="col-lg-8 mx-auto">
+            {foreach $flashes as $flash}
+              <div class="alert alert-{$flash->type}">{$flash->message}</div>
+            {/foreach}
+
+
+            </div>
+        </div>
+           
+            <br><br>    
+        <div class="row" id="row1">
+          <div class="col-lg-8 mx-auto">
+              
+            {foreach $control["demontaz"]->errors as $error}
+              <div class="alert alert-danger">{$error}</div>
+            {/foreach}
+              
+              <h4> Demontáž kola </h4>
+               {form demontaz, class => "form-group form-horizontal"}
+                   {label cislo}
+                   {input cislo, class => "form-control", style => "width: 35%;"}
+                   {label sekundy}
+                   {input sekundy, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+
+
+            </div>
+        </div>
+ 
+    {ifset $dk}
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+              
+            <h2>Historie časů výměny kol: </h2>
+                <br>
+                <table class="table table-striped table-responsive-sm">
+                 <tr>
+                 <th> Startovní číslo</th>
+                 <th> Jméno </th>
+                 <th> Značka </th>
+                 <th> Čas výměny </th>
+                 <th> Body </th>
+                 </tr>
+                 
+                 {var cnt = 1}
+                 {foreach $dk as $polozka}
+                     {dump $polozka}
+                    <tr>
+                        <td> {$polozka["zavodnik"]->cislo}</td>
+                        <td> {$polozka["zavodnik"]->jmeno}</td>
+                        
+                        <td> {$polozka["zavodnik"]->znacka}</td>
+                        <td> {$polozka["cas"]}s</td>
+                        
+                        <td> {$polozka["body"]}</td>
+                    </tr>
+                    {var cnt = $cnt +1 }
+                 {/foreach}
+               </table>
+
+
+            </div>
+        </div>
+    {/ifset}
+        
+        {/if}
+            
+            
+            
+        </div>
+      </div>
+    </section>
+{/block}

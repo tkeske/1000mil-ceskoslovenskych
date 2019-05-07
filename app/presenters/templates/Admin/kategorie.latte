@@ -1,0 +1,27 @@
+{** @author Tomáš Keske *}
+
+{layout default1.latte}
+
+{block title}Správce kategorií{/block}
+
+{block obsah}
+
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+
+              {foreach $flashes as $flash}
+                <div class="alert alert-{$flash->type}">{$flash->message}</div>
+              {/foreach}
+
+            <h2>Kategorie</h2>
+            <ul>
+              <li><a n:href="Kategorie:pridat" class="nav-link js-scroll-trigger">Přidat kategorii</a></li>
+              <li><a n:href="Kategorie:odebrat" class="nav-link js-scroll-trigger">Odebrat kategorii</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+{/block}

@@ -1,0 +1,128 @@
+{** @author Tomáš Keske *}
+
+{layout '../@layout.latte'}
+{block title} Tomáš Keske - blog{/block}
+{block content}
+
+    <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">CMS ver 0.1</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+        {if !$user->isLoggedIn()}
+          <li class="nav-item">
+            <a n:href="Homepage:default" class="nav-link js-scroll-trigger">Domů</a>
+          </li>
+          <li class="nav-item">
+            <a n:href="Result:default" class="nav-link js-scroll-trigger">Výsledky závodů</a>
+          </li>
+          <li class="nav-item">
+            <a n:href="Login:default" class="nav-link js-scroll-trigger">Přihlásit se</a>
+          </li>
+          {else}
+            <a n:href="Homepage:default" class="nav-link js-scroll-trigger">Domů</a>
+
+            {if $user->isInRole("admin")}
+              <a n:href="Admin:default" class="nav-link js-scroll-trigger">Administrace</a>
+            {/if}
+            
+            {if $user->isInRole("kontrola")}
+                <a n:href="Admin:etapa $presenter->getSession()->getSection('etapa')->id" class="nav-link js-scroll-trigger">Stanoviště</a>
+            {/if}
+            
+            <a n:href="Homepage:rss" class="nav-link js-scroll-trigger">RSS</a>
+            <a n:href="Homepage:logout" class="nav-link js-scroll-trigger">Odhlásit se ({$user->getIdentity()->data[0]})</a>
+          {/if}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="bg-primary text-white">
+    <div class="container text-center">
+      <h1>Vítejte na blogu!</h1>
+      <p class="lead">Powered by Nette version 2.4</p>
+    </div>
+  </header>
+
+  {var $cnt = 0}
+  {foreach $clanky as $clanek}
+
+  {if $cnt % 2 == 0}
+     <section id="services" class="bg-light">
+  {else}
+    <section id="about">
+  {/if}
+
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2><a n:href="Zobraz:clanek $clanek->slug" class="">{$clanek->title}</a></h2>
+              
+              Publikováno: {$clanek->date} <br>
+              Zařazeno do rubriky:
+              {foreach $clanek->getCategory() as $cat}
+                    <a n:href="Rubrika:list $cat->id" class="">{$cat->jmeno}</a> &nbsp;
+              {/foreach}
+
+              {var $c = 0}
+              {foreach $clanek->getComents() as $cmnt}
+                {if $cmnt->status != "blocked"}
+                  {var $c = $c +1}
+                {/if}
+              {/foreach}
+
+              Komentáře: ({$c})
+
+              <br><br>
+            <p class="lead">
+                {$clanek->text|truncate:400}
+
+                <br><br>
+
+                {if count($clanek->getObrazy()) > 0}
+
+                  <b>Obrázky:</b> <br>
+                  {foreach $clanek->getObrazy() as $obrazek}
+                    <a href="{$basePath}/images/{$obrazek->path}">
+                    <img src="{$basePath}/images/{$obrazek->path}" width=150; height=150;></a>
+                  {/foreach}
+                {/if}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {var $cnt = $cnt +1}
+  {/foreach}
+
+ <section id="about">
+  <div class="row">
+  <div class="col-lg-8 mx-auto">
+
+  <div class="pagination">
+    {if !$paginator->isFirst()}
+        <a n:href="default, 1">První</a>
+        &nbsp;|&nbsp;
+        <a n:href="default, $paginator->page-1">Předchozí</a>
+        &nbsp;|&nbsp;
+    {/if}
+
+    Stránka {$paginator->page} z {$paginator->pageCount}
+
+    {if !$paginator->isLast()}
+        &nbsp;|&nbsp;
+        <a n:href="default, $paginator->page+1">Další</a>
+        &nbsp;|&nbsp;
+        <a n:href="default, $paginator->pageCount">Poslední</a>
+    {/if}
+</div>
+</div>
+</div>
+</section>
+
+{/block}

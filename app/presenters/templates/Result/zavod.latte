@@ -1,0 +1,85 @@
+{** @author Tomáš Keske *}
+{layout default1.latte}
+{block title} Celkové výsledky {/block}
+{block obsah}
+    <section id="about">
+      <div class="container">
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">
+                 <img src="/images/logo.png" width="100%" height="100%">
+
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">     
+                 <center>  <a n:href="Result:default" class="btn btn-primary"><< Zpět na závody</a></center>
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+
+        <div class="row">           
+          <div class="col-lg-8 mx-auto">
+              
+            {snippet vysledky}
+                <h2>Celkové výsledky</h2>
+                <br><br>
+                <table class="table table-striped table-responsive-sm">
+                 <tr>
+                 <th> Pořadí  </th>
+                 <th> Startovní číslo závodníka </th>
+                 <th> Jméno závodníka </th>
+                 <th> Značka vozu </th>
+                 <th> Objem </th>
+                 <th> Výsledné body </th>
+                 </tr>
+                 
+                 {ifset $results}
+                 {var cnt = 1}
+                 
+                 {foreach $results as $key => $polozka}
+                    <tr>
+                        <td>{if $polozka["zavodnik"]->status == null }{$cnt}{else}DSQ{/if}</td>
+                        <td>{$polozka["zavodnik"]->cislo}</td>
+                        <td>{$polozka["zavodnik"]->jmeno}</td>
+                        <td>{$polozka["zavodnik"]->znacka}</td>
+                        <td>{$polozka["zavodnik"]->objem}</td>
+                        <td>{$polozka["body"]}</td>
+                    </tr>
+                    {var cnt = $cnt + 1}
+                 {/foreach}
+                 {/ifset}
+               </table>
+            {/snippet}
+               <br><br><br>
+               
+               
+               
+              {* <a n:href="refresh! $zavod->id" id="link_refresh" class="btn btn-primary refresh ajax">Refresh výsledků</a> *}
+          </div>
+        </div>
+      </div>
+    </section>
+          {*
+    <script>
+        var interval = setInterval(refresh, 5000);
+        function refresh() {
+            var r = document.getElementById('link_refresh');
+            r.click();
+        }
+        function nullTimer() {
+            clearInterval(interval);
+        }
+
+ </script>
+          *}
+{/block}     

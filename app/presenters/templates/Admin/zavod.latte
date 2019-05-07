@@ -1,0 +1,340 @@
+{** @author Tomáš Keske *}
+
+{layout default1.latte}
+
+{block title}Etapa: {$name}{/block}
+
+{block obsah}
+    <section id="about">
+      <div class="container">
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">
+                 <img src="/images/logo.png" width="100%" height="100%">
+
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">     
+                 <center> <a n:href="Admin:balik $zavod->balik->id" class="btn btn-primary"> << Zpět na závod </a></center>
+            </div>
+             <div class="col">
+            </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+              <h1>Etapa: {$name} </h1>
+              <br>
+         
+
+
+            </div>
+        </div>
+              
+        <div class="row" >
+          <div class="col-lg-8 mx-auto">
+          <table class="table table-striped table-responsive-sm">
+              <th><a id="zmenaStartu" class="active" href=javascript:zmenaJmena()>Změnit jméno etapy</a></th>
+              <th><a id="zmenaStartu" class="active" href=javascript:zmenaStartu()>Změnit start etapy</a></th>
+              <th><a id="pridatEtapu" href=javascript:pridatEtapu()>Přidat kontrolu</a></th>
+              <th><a id="zobrazDetail" href=javascript:zobrazDetail()>Zpět na detail etapy</a> </th>
+          </table>
+              <br>
+          <table class="table table-striped table-responsive-sm">
+              <th><a id="importKontrol" class="active" href=javascript:importKontrol()>Import kontrol</a></th>
+          </table>
+          </div>
+        </div>
+        
+        <br><br>
+        
+        <div class="row" id="row0">
+          <div class="col-lg-8 mx-auto">
+            {foreach $flashes as $flash}
+              <div class="alert alert-{$flash->type}">{$flash->message}</div>
+            {/foreach}
+            <h4>Startovní čas etapy: 
+                {if $zavod->start}
+                    {$zavod->start->format("d.m.Y H:i:s")}
+                {/if}
+            </h4>
+
+
+            </div>
+        </div>
+                   
+              
+               <script>
+              function zmenaStartu(){
+                  $("#row1").show();
+                  $("#pridatZavodnika").show();
+                  $("#zmenaStartu").show();
+                  $("#casDojezdu").show();
+                  $("#zobrazDetail").show();
+                  $("#row0").hide();;
+                  $("#row2").hide();;
+                  $("#row3").hide();
+                  $("#row4").hide();
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#row7").hide();
+              }
+              
+
+              
+            function pridatZavodnika(){
+                  $("#row2").show();;
+                  $("#pridatZavodnika").show();
+                  $("#zmenaStartu").show();
+                  $("#zobrazDetail").show();
+                  $("#zmenaJmena").show();
+                  $("#row0").hide();;
+                  $("#row3").hide();;
+                  $("#row1").hide();
+                  $("#row4").hide();
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#row7").hide();
+              }
+              
+            function pridatEtapu(){
+                  $("#row3").show();
+                  $("#pridatZavodnika").show();
+                  $("#zmenaStartu").show();
+                  $("#pridatEtapu").show();
+                  $("#zobrazDetail").show();
+                  $("#zmenaJmena").show();
+                  $("#row0").hide();;
+                  $("#row2").hide();;
+                  $("#row1").hide();
+                  $("#row4").hide();
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#row7").hide();
+                  $("#row8").hide();
+              }
+              
+            function zobrazDetail(){
+                  $("#row3").hide();
+                  $("#row2").hide();
+                  $("#row1").hide();
+                  $("#pridatZavodnika").show();
+                  $("#zmenaStartu").show();
+                  $("#pridatEtapu").show();
+                  $("#zobrazDetail").show();
+                  $("#zmenaJmena").show();
+                  $("#row0").show();;
+                  $("#row4").show();;
+                  $("#row5").show();
+                  $("#row6").show();
+                  $("#row7").hide();
+            }
+            
+            function zmenaJmena(){
+                  $("#row3").hide();
+                  $("#row2").hide();
+                  $("#row1").hide();
+                  $("#pridatZavodnika").show();
+                  $("#zmenaStartu").show();
+                  $("#pridatEtapu").show();
+                  $("#zobrazDetail").show();
+                  $("#zmenaJmena").show();
+                  $("#row0").hide();;
+                  $("#row4").hide();;
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#row7").show();
+            }
+            
+            function importKontrol(){
+                  $("#row3").hide();
+                  $("#row2").hide();
+                  $("#row1").hide();
+                  $("#pridatZavodnika").show();
+                  $("#zmenaStartu").show();
+                  $("#pridatEtapu").show();
+                  $("#zobrazDetail").show();
+                  $("#zmenaJmena").show();
+                  $("#importKontrol").show();
+                  $("#row0").hide();;
+                  $("#row4").hide();;
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#row7").hide();
+                  $("#row8").show();
+            }
+              
+          </script>
+                 
+              
+
+        <div class="row" id="row1" style="display:none;">
+          <div class="col-lg-8 mx-auto">
+            
+                {form start, class => "form-group form-horizontal"}
+                   {label cas}
+                   {input cas, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+                   
+                  <script>
+                    $(function () {
+                        $('#frm-start-cas').datetimepicker();
+                      });
+                </script>
+
+            </div>
+        </div>
+                   
+
+        
+        <br>  
+        
+        {if count($etapy) > 0 }
+        <div class="row" id="row5">
+          <div class="col-lg-8 mx-auto">
+            <h2>Seznam průjezdových kontrol: </h2>
+                <br>
+                <table class="table table-striped table-responsive-sm">
+                 <tr>
+                 <th> Název kontroly </th>
+
+                 <th> Detail </th>
+                 <th> Upravit </th>
+                 <th> Akce </th>
+                 </tr>
+                 {foreach $etapy as $etapa}
+                    <tr><td>{$etapa->name}</td>
+                        <td> <a n:href="Admin:etapa $etapa->id">Detail kontroly</a></td>
+                        <td> <a n:href="Admin:uE $etapa->id, $zavod->id">Upravit</a></td>
+                        <td> <a n:href="Admin:smazatEtapu $zavod->id,$etapa->id">Smazat kontrolu</a></td>
+                    </tr>
+                 {/foreach}
+               </table>
+
+            </div>
+          </div>
+        {/if}
+        
+        <br><br> 
+        
+        <div class="row" id="row2" style="display: none;">
+          <div class="col-lg-8 mx-auto">
+            
+            <h2>Přidat závodníka</h2>
+            
+                {form pz, class => "form-group form-horizontal"}
+                   {label jmeno}
+                   {input jmeno, class => "form-control", style => "width: 35%;"}
+                   {label cislo}
+                   {input cislo, class => "form-control", style => "width: 35%;"}
+                   {label znacka}
+                   {input znacka, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+
+            </div>
+          </div>
+        <br>
+        
+  
+        <div class="row" id="row3" style="display: none;">
+          <div class="col-lg-8 mx-auto">
+            <h2>Přidat kontrolu</h2>
+            
+                {form ve, class => "form-group form-horizontal"}
+                   {label jmeno}
+                   {input jmeno, class => "form-control", style => "width: 35%;"}
+                   {label bc}
+                   {input bc, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {label ev}
+                   {input ev, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {label jp}
+                   {input jp, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {label dk}
+                   {input dk, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+
+            </div>
+          </div>
+ {*       
+        {ifset $results}
+          <div class="row" id="row6">
+          <div class="col-lg-8 mx-auto">
+            <h2>Výsledky etapy</h2>
+            
+                <table class="table table-striped table-responsive-sm">
+                 <tr>
+                 <th> Pořadí  </th>
+                 <th> Jméno závodníka </th>
+                 <th> Číslo závodníka </th>
+                 <th> Výsledný čas závodu </th>
+                 <th> Penalizace </th>
+                 </tr>
+                 
+                 {var cnt = 1}
+                 
+                 {foreach $results as $key => $polozka}
+                    <tr>
+                        <td>{$cnt}</td>
+                        <td>{$polozka["polozka"]["zavodnik"]->jmeno}</td>
+                        <td>{$polozka["polozka"]["zavodnik"]->cislo}</td>
+                        <td>{$zavod->start->diff($polozka["polozka"]["finishDT"])->format("%H:%I:%S")}</td>
+                        <td> {$polozka["body"]}</td>
+                    </tr>
+                    {var cnt = $cnt + 1}
+                 {/foreach}
+               </table>
+
+            </div>
+          </div>
+        {/ifset}
+        *}
+        
+        <div class="row" id="row7" style="display: none;">
+          <div class="col-lg-8 mx-auto">
+            <h2>Změnit jméno etapy</h2>
+            
+                {form upravZavod, class => "form-group form-horizontal"}
+                   {label jmeno}
+                   {input jmeno, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+
+            </div>
+          </div>
+                   
+        <div class="row" id="row8" style="display: none;">
+          <div class="col-lg-8 mx-auto">
+            <h2>Import kontrol</h2>
+            
+                {form importKontrol, class => "form-group form-horizontal"}
+                   {label file}
+                   {input file, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    </section>
+{/block}

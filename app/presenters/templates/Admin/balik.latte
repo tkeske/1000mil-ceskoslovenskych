@@ -1,0 +1,448 @@
+{** @author Tomáš Keske *}
+
+{layout default1.latte}
+
+{block title}Správce etap{/block}
+
+{block obsah}
+    <section id="about">
+      <div class="container">
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">
+                 <img src="/images/logo.png" width="100%" height="100%">
+
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">     
+                 <center> <a n:href="Admin:baliky" class="btn btn-primary"> << Zpět na seznam závodů </a></center>
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row" >
+          <div class="col-lg-8 mx-auto">
+          <table class="table table-striped table-responsive-sm">
+              <th><a id="pridatZavodnika" href=javascript:pridatZavodnika()>Přidat závodníka</a></th>
+              <th><a id="pridatEtapu" href=javascript:pridatEtapu()>Přidat etapu</a></th>
+              <th><a id="znackove_tymy" href=javascript:znackoveTymy()>Značkové týmy</a></th>
+              <th><a id="detail" href=javascript:detailZavodu()>Zpět na detail</a></th>
+          </table>
+          
+          <table class="table table-striped table-responsive-sm">
+              <th><a id="importZavodniku" href=javascript:importZavodniku()>Import závodníků</a></th>
+              <th><a id="pb" href=javascript:pridatBody()>Přidat body</a></th>
+              <th><a id="diskvalifikace_link" href=javascript:diskvalifikace()>Diskvalifikace</a></th>
+              <th></th>
+          </table>
+          </div>
+        </div>
+          <br><br> 
+        <script>
+            function pridatZavodnika(){
+                  $("#row2").show();;
+                  $("#pridatZavodnika").show();
+                  $("#zmenaStartu").show();
+                  $("#zobrazDetail").show();
+                  $("#zmenaJmena").show();
+                  $("#diskvalifikace").hide();
+                  $("#pridat_body").hide();
+                   $("#znackoveTymy").hide();
+                  $("#row0").hide();;
+                  $("#row3").hide();;
+                  $("#row1").hide();
+                  $("#row4").hide();
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#row7").hide();
+              }
+              
+            function pridatEtapu(){
+                  $("#row3").show();
+                  $("#pridatZavodnika").show();
+                  $("#zmenaStartu").show();
+                  $("#pridatEtapu").show();
+                  $("#zobrazDetail").show();
+                  $("#zmenaJmena").show();
+                  $("#diskvalifikace").hide();
+                  $("#pridat_body").hide();
+                  $("#znackoveTymy").hide();
+                  //$("#importZavodniku").hide();
+                  $("#import").hide();
+                  $("#row0").hide();;
+                  $("#row2").hide();;
+                  $("#row1").hide();
+                  $("#row4").hide();
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#row7").hide();
+              }
+              
+              function detailZavodu(){
+                  $("#row3").hide();
+                  $("#pridatZavodnika").show();
+                  $("#zmenaStartu").show();
+                  $("#pridatEtapu").show();
+                  $("#zobrazDetail").show();
+                  $("#zmenaJmena").show();
+                  $("#znackoveTymy").hide();
+                  $("#row0").show();;
+                  $("#row2").hide();;
+                  $("#row1").hide();
+                  $("#row4").show();
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#row7").hide();
+              }
+              
+              function importZavodniku(){
+                  $("#row3").hide();
+                  $("#pridatZavodnika").show();
+                  $("#zmenaStartu").show();
+                  $("#pridatEtapu").show();
+                  $("#zobrazDetail").show();
+                  $("#zmenaJmena").show();
+                  $("#importZavodniku").show();
+                  $("#import").show();
+                  $("#celkove_vysledky").hide();
+                  $("#pridat_body").hide();
+                  $("#znackoveTymy").hide();
+                  $("#row0").hide();;
+                  $("#row2").hide();;
+                  $("#row1").hide();
+                  $("#row4").hide();
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#row7").hide();
+              }
+              
+              function pridatBody(){
+                  $("#row3").hide();
+                  $("#pridatZavodnika").show();
+                  $("#zmenaStartu").show();
+                  $("#pridatEtapu").show();
+                  $("#zobrazDetail").show();
+                  $("#zmenaJmena").show();
+                  $("#importZavodniku").show();
+                  $("#import").hide();
+                  $("#pb").show();
+                  $("#pridat_body").show();
+                  $("#celkove_vysledky").hide();
+                  $("#row0").hide();
+                  $("#diskvalifikace").hide();
+                  $("#znackoveTymy").hide();
+                  $("#row2").hide();;
+                  $("#row1").hide();
+                  $("#row4").hide();
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#row7").hide();
+              }
+              
+              function diskvalifikace(){
+                  $("#row3").hide();
+                  $("#pridatZavodnika").show();
+                  $("#zmenaStartu").show();
+                  $("#pridatEtapu").show();
+                  $("#zobrazDetail").show();
+                  $("#zmenaJmena").show();
+                  $("#importZavodniku").show();
+                  $("#import").hide();
+                  $("#pb").show();
+                  $("#pridat_body").hide();
+                  $("#celkove_vysledky").hide();
+                  $("#diskvalifikace").show();
+                  $("#diskvalifikace_link").show();
+                  $("#znackoveTymy").hide();
+                  $("#row0").hide();;
+                  $("#row2").hide();;
+                  $("#row1").hide();
+                  $("#row4").hide();
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#row7").hide();
+              }
+              
+              function znackoveTymy(){
+                  $("#row3").hide();
+                  $("#pridatZavodnika").show();
+                  $("#zmenaStartu").show();
+                  $("#pridatEtapu").show();
+                  $("#zobrazDetail").show();
+                  $("#zmenaJmena").show();
+                  $("#importZavodniku").show();
+                  $("#znackove_tymy").show();
+                  $("#znackoveTymy").show();
+                  $("#import").hide();
+                  $("#pb").show();
+                  $("#pridat_body").hide();
+                  $("#celkove_vysledky").hide();
+                  $("#diskvalifikace").hide();
+                  $("#diskvalifikace_link").show();
+                  $("#row0").hide();;
+                  $("#row2").hide();;
+                  $("#row1").hide();
+                  $("#row4").hide();
+                  $("#row5").hide();
+                  $("#row6").hide();
+                  $("#row7").hide();
+              }
+        </script>
+          
+        <div class="row" id="row0">
+          <div class="col-lg-8 mx-auto">
+              
+          {foreach $flashes as $flash}
+              <div class="alert alert-{$flash->type}">{$flash->message}</div>
+          {/foreach}
+          
+            <h2>Seznam etap:</h2>
+            
+            <table class="table table-striped table-responsive-sm">
+              <tr>
+              <th scope="col"> Jméno etapy </th>
+              <th scope="col"> Start etapy </th>
+              <th scope="col"> Upravit </th>
+              <th scope="col"> Smazat </th>
+              </tr>
+              
+              {if count($zavody) > 0}
+                {foreach $zavody as $zavodn}
+                  <tr><td><a n:href="Admin:zavod $zavodn->id">Etapa: {$zavodn->name}</a></td>
+                      <td>{$zavodn->start->format("d.m.Y H:i:s")}</td>
+                      <td><a n:href="Admin:zavod $zavodn->id">Upravit</a></td>
+                      <td><a n:href="Admin:smazZavod $zavodn->id, $zavodn->balik->id">Smazat</a></td>
+                  </tr>
+                {/foreach}
+              {/if}
+
+            </table>
+          </div>
+        </div>
+        <br><br>     
+        
+        {ifset $balik->zavodnici}
+            <div class="row" id="row4">
+              <div class="col-lg-8 mx-auto">
+                <h2>Startovní listina:</h2>
+
+                    <table class="table table-striped table-responsive-sm">
+                     <tr>
+                     <th> Číslo </th>
+                     <th> Jméno </th>
+                     <th> Značka </th>
+                     <th> Objem </th>
+                     <th> Edit </th>
+                     <th> Akce </th>
+
+                     </tr>
+                     {foreach $balik->zavodnici as $zavodnik}
+                        <tr>
+                            <td> {$zavodnik->cislo} </td>
+                            <td> {$zavodnik->jmeno} </td>
+                            <td> {$zavodnik->znacka} </td>
+                            <td> {$zavodnik->objem} </td>
+                            <td> <a n:href="Admin:uZ $zavodnik->id, $balik->id">Upravit</a></td>
+                            <td> <a n:href="Admin:smazZavodnika $balik->id,$zavodnik->id">Smazat</a></td>
+                        </tr>
+                     {/foreach}
+                   </table>
+
+                </div>
+            </div>
+        {/ifset}
+                <br><br>
+        <div class="row" id="row3" style="display: none;">
+            <div class="col-md-2">
+            </div>
+          <div class="col">
+            <h2>Vytvořit Etapu</h2>
+            
+                {form vz, class => "form-group form-horizontal"}
+                   {label jmeno}
+                   {input jmeno, class => "form-control"}
+                   {label start}
+                   {input start, class => "form-control"}
+
+                   <br><br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+               
+                   
+                <script>
+                    $(function () {
+                        $('#frm-vz-start').datetimepicker();
+                      });
+                </script>
+
+            </div>
+              <div class="col">
+            </div>     
+          </div>
+                   
+        <div class="row" id="row2" style="display: none;">
+          <div class="col-lg-8 mx-auto">
+            
+            <h2>Přidat závodníka</h2>
+            
+                {form pz, class => "form-group form-horizontal"}
+                   {label jmeno}
+                   {input jmeno, class => "form-control", style => "width: 35%;"}
+                   {label cislo}
+                   {input cislo, class => "form-control", style => "width: 35%;"}
+                   {label znacka}
+                   {input znacka, class => "form-control", style => "width: 35%;"}
+                   {label objem}
+                   {input objem, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+
+            </div>
+          </div>
+         {* 
+        <div class="row" id="celkove_vysledky">           
+          <div class="col-lg-8 mx-auto">
+              
+            {snippet vysledkyinzavod}
+                <h2>Celkové výsledky</h2>
+                <br><br>
+                <table class="table table-striped table-responsive-sm">
+                 <tr>
+                 <th> Pořadí  </th>
+                 <th> Jméno závodníka </th>
+                 <th> Číslo závodníka </th>
+                 <th> Výsledný čas závodu </th>
+                 <th> Penalizace </th>
+                 </tr>
+                 
+                 {ifset $results}
+                 {var cnt = 1}
+                 
+                 {foreach $results as $key => $polozka}
+                    <tr>
+                        <td>{$cnt}</td>
+                        <td>{$polozka["zavodnik"]->jmeno}</td>
+                        <td>{$polozka["zavodnik"]->cislo}</td>
+                        <td>{ifset $polozka["finishDT"] }{$polozka["finishDT"]->format("d.m.Y H:i:s")}{/ifset}</td>
+                        <td>{$polozka["body"]}</td>
+                    </tr>
+                    {var cnt = $cnt + 1}
+                 {/foreach}
+                 {/ifset}
+               </table>
+            {/snippet}
+               <br><br><br>
+
+               <a n:href="refreshMe! $zavod->id" id="link_refresh" class="btn btn-primary refresh ajax">Refresh výsledků</a>
+               
+                   <script>
+                        var interval = setInterval(refresh, 5000);
+                        function refresh() {
+                            var r = document.getElementById('link_refresh');
+                            r.click();
+                        }
+                        function nullTimer() {
+                            clearInterval(interval);
+                        }
+
+                 </script>
+             
+          </div>
+        </div>
+        *}       
+               
+        <div class="row" id="import" style="display: none;">
+          <div class="col-lg-8 mx-auto">
+            
+            <h2>Import závodníků</h2>
+            
+                {form importZavodniku, class => "form-group form-horizontal"}
+                   {label file}
+                   {input file, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+
+            </div>
+          </div>
+                   
+        <div class="row" id ="pridat_body" style="display:none;">
+          <div class="col-lg-8 mx-auto">
+            
+            <h2>Přidat body</h2>
+            
+            <br><br>
+           {form pridatBody, class => "form-group form-horizontal"}
+               {label etapa}
+               {input etapa, class => "form-control", style => "width: 25%;"}
+               <br>
+               {label kontrola}
+               {input kontrola, class => "form-control", style => "width: 25%;"}
+               <br>
+               {label cislo}
+               {input cislo, class => "form-control", style => "width: 25%;"}
+               <br>
+               {label body}
+               {input body, class => "form-control", style => "width: 25%;"}
+               <br><br>
+               {input submit, class => "btn btn-primary" }
+           {/form}
+            </div>
+        </div>
+           
+        <div class="row" id ="diskvalifikace" style="display:none;">
+          <div class="col-lg-8 mx-auto">
+            
+            <h2>Diskvalifikace</h2>
+            
+            <br><br>
+           {form dSQ, class => "form-group form-horizontal"}
+               {label cislo}
+               {input cislo, class => "form-control", style => "width: 25%;"}
+               <br><br>
+               {input submit, class => "btn btn-primary" }
+           {/form}
+            </div>
+        </div>
+            
+        <div class="row" id="znackoveTymy" style="display:none;">
+          <div class="col-lg-8 mx-auto">
+            
+            <h2>Vytvořit tým</h2>
+            
+               {form vytvoritTeam, class => "form-group form-horizontal"}
+                   {label jmenoTymu}
+                   {input jmenoTymu, class => "form-control", style => "width: 25%;"}
+                   <br><br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+                   <br><br>      
+            <h2>Seznam týmů</h2>
+            
+            <table class="table table-striped table-responsive-sm">
+                 <tr>
+                     <th> Jméno týmu </th>
+                 </tr>
+                 
+                 {foreach $teamy as $key => $polozka}
+                    <tr>
+                        <td><a n:href="Admin:team $polozka->id">{$polozka->jmenoTymu}</a></td>
+                    </tr>
+                 {/foreach}
+               </table>
+            </div>
+        </div>
+            
+      </div>
+    </section>
+{/block}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{block title}{/block}</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{$basePath}/css/scrolling-nav.css" rel="stylesheet">
+    
+    <script
+      src="https://code.jquery.com/jquery-3.4.0.min.js"
+      integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+      crossorigin="anonymous">
+          
+    </script>
+    
+   {* <script src="{$basePath}/js/jquery-3.2.1.slim.min.js" ></script> *}
+
+    <script src="{$basePath}/js/popper.min.js"></script>
+
+    <script src="{$basePath}/js/moment.min.js" type="text/javascript"></script>
+    <script src="{$basePath}/js/moment.cs.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="{$basePath}/css/bootstrap-datetimepicker.min.css">
+    <script src="{$basePath}/js/bootstrap-datetimepicker.min.js"></script>
+  </head>
+
+  <body id="page-top">
+    
+
+    {block content}{/block}
+
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+
+      <div class="container">
+       {* <p class="m-0 text-center text-white">Copyright &copy; Tomáš Keske 2017</p> *}
+      </div>
+
+      <center>    
+        <a href="https://1000milceskoslovenskych.cz/" class="nav-link js-scroll-trigger"> &copy; 1000mil československých</a>
+      </center>
+      <!-- /.container -->
+    </footer>
+
+    <script src="{$basePath}/js/nette.ajax.js"></script>
+    <script src="{$basePath}/js/nette.Forms.js"></script>
+    <script src="{$basePath}/js/dependentSelectBox.js"></script>
+    <script>
+            $.nette.init();
+            $('[data-dependentselectbox]').dependentSelectBox();
+    </script>
+    <script src="{$basePath}/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{$basePath}/js/jquery.easing.min.js"></script>
+
+    <!-- Custom JavaScript for this theme -->
+    <script src="{$basePath}/js/scrolling-nav.js"></script>
+    
+  
+  
+
+  </body>
+
+</html>

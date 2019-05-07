@@ -1,0 +1,155 @@
+{** @author Tomáš Keske *}
+{layout default1.latte}
+{block title} Celkové výsledky {/block}
+{block obsah}
+    <section id="about">
+      <div class="container">
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">
+                 <img src="/images/logo.png" width="100%" height="100%">
+
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">     
+                 <center>  <a n:href="Result:default" class="btn btn-primary"><< Zpět na závody</a></center>
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+          
+        <div class="row" style="padding-bottom: 7%;">
+           <div class="col-lg-8 mx-auto">
+                <table class="table table-striped table-responsive-sm">
+                    <tr>
+                    <th> <a href=javascript:zobraz1000()>Do 1000ccm </a></th>
+                    <th> <a href="javascript:zobraz1500()">Do 1500ccm </a></th>
+                    <th> <a href="javascript:zobraz2000()">Do 2000ccm </a></th>
+                    <th> <a href="javascript:zobrazNad2000()">Nad 2000ccm</a></th>
+
+                    </tr>
+                </table>
+           </div>
+        </div>
+          
+          <script>
+              function zobraz1000(){
+                  $("#do1000").show();
+                  $("#do1500").hide();
+                  $("#do2000").hide();
+                  $("#nad2000").hide();
+              }
+              
+              function zobraz1500(){
+                  $("#do1000").hide();
+                  $("#do1500").show();
+                  $("#do2000").hide();
+                  $("#nad2000").hide();
+              }
+              
+              function zobraz2000(){
+                  $("#do1000").hide();
+                  $("#do1500").hide();
+                  $("#do2000").show();
+                  $("#nad2000").hide();
+              }
+              
+              function zobrazNad2000(){
+                  $("#do1000").hide();
+                  $("#do1500").hide();
+                  $("#do2000").hide();
+                  $("#nad2000").show();
+              }
+          </script>
+          
+
+        <div class="row">           
+          <div class="col-lg-8 mx-auto">
+              
+              
+            {snippet vysledkykategorie}
+                 
+                 {ifset $kategorieresults}
+                 
+                 {foreach $kategorieresults as $key => $polozka}
+                     <div id="{$key}" style="display:none;">
+                     {if $key == "do1000"}
+                     <h3>Kategorie objem do 1000ccm</h3>
+                     {/if}
+                     
+                     {if $key == "do1500"}
+                     <h3>Kategorie objem do 1500ccm</h3>
+                     {/if}
+                     
+                     {if $key == "do2000"}
+                     <h3>Kategorie objem do 2000ccm</h3>
+                     {/if}
+                     
+                     {if $key == "nad2000"}
+                     <h3>Kategorie objem nad 2000ccm</h3>
+                     {/if}
+                     
+                     <br>
+                     <table class="table table-striped table-responsive-sm">
+                        <tr>
+                        <th> Pořadí  </th>
+                        <th> Startovní číslo závodníka </th>
+                        <th> Jméno závodníka </th>
+                        <th> Značka vozu </th>
+                        <th> Objem </th>
+                        <th> Výsledné body </th>
+                        </tr>
+                        
+                        {var cnt = 1}
+                        
+                        {foreach $polozka as $p}
+                           <tr>
+                               <td>{if $p["zavodnik"]->status == null }{$cnt}{else}DSQ{/if}</td>
+                               <td>{$p["zavodnik"]->cislo}</td>
+                               <td>{$p["zavodnik"]->jmeno}</td>
+                               <td>{$p["zavodnik"]->znacka}</td>
+                               <td>{$p["zavodnik"]->objem}</td>
+                               <td>{$p["body"]}</td>
+                           </tr>
+                           {var cnt = $cnt + 1}
+                        {/foreach}
+                    </table>
+                    
+                     </div>
+                    
+                 {/foreach}
+                 {/ifset}
+               
+            {/snippet}
+               <br><br><br>
+               
+               
+               
+              {* <a n:href="refreshKategorie! $zavod->id" id="link_refresh" class="btn btn-primary refresh ajax">Refresh výsledků</a>*}
+          </div>
+        </div>
+      </div>
+    </section>
+          {*
+    <script>
+        var interval = setInterval(refresh, 5000);
+        function refresh() {
+            var r = document.getElementById('link_refresh');
+            r.click();
+        }
+        function nullTimer() {
+            clearInterval(interval);
+        }
+
+ </script>
+          *}
+{/block}    

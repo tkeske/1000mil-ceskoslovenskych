@@ -1,0 +1,48 @@
+{** @author Tomáš Keske *}
+
+{layout ../Admin/default1.latte}
+
+{block title}Editovat články{/block}
+
+{block obsah}
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Editovat články</h2>
+            
+            <table>
+              <tr>
+              <th> Název článku </th>
+              <th> Akce </th>
+              </tr>
+              {foreach $articles as $article}
+                <tr><td>{$article->title}</td> <td> <a n:href="Clanky:edituj $article->id" class="">Editovat článek</a></td></tr>
+              {/foreach}
+            </table>
+            
+            <br>
+
+            <div class="pagination">
+              {if !$paginator->isFirst()}
+                  <a n:href="editovat, 1">První</a>
+                  &nbsp;|&nbsp;
+                  <a n:href="editovat, $paginator->page-1">Předchozí</a>
+                  &nbsp;|&nbsp;
+              {/if}
+
+              Stránka {$paginator->page} z {$paginator->pageCount}
+
+              {if !$paginator->isLast()}
+                  &nbsp;|&nbsp;
+                  <a n:href="editovat, $paginator->page+1">Další</a>
+                  &nbsp;|&nbsp;
+                  <a n:href="editovat, $paginator->pageCount">Poslední</a>
+              {/if}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+{/block}

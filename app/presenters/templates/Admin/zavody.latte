@@ -1,0 +1,89 @@
+{** @author Tomáš Keske *}
+
+{layout default1.latte}
+
+{block title}Správce závodů{/block}
+
+{block obsah}
+    <section id="about">
+      <div class="container">
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">
+                 <img src="/images/logo.png" width="100%" height="100%">
+
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">     
+                 <center> <a n:href="Admin:default" class="btn btn-primary"> << Zpět na administraci </a></center>
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+              
+          {foreach $flashes as $flash}
+              <div class="alert alert-{$flash->type}">{$flash->message}</div>
+          {/foreach}
+          
+            <h2>Seznam závodů</h2>
+            
+            <table class="table table-striped table-responsive-sm">
+              <tr>
+              <th scope="col"> Jméno závodu </th>
+              <th scope="col"> Start závodu </th>
+              <th scope="col"> Upravit </th>
+              <th scope="col"> Smazat </th>
+              </tr>
+              
+              {foreach $zavody as $zavod}
+                <tr><td><a n:href="Admin:zavod $zavod->id">Závod: {$zavod->name}</a></td>
+                    <td>{$zavod->start->format("d.m.Y H:i:s")}</td>
+                    <td><a n:href="Admin:zavod $zavod->id">Upravit</a></td>
+                    <td><a n:href="Admin:smazZavod $zavod->id">Smazat</a></td>
+                </tr>
+              {/foreach}
+
+            </table>
+           
+
+          </div>
+        </div>
+                <br><br>
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+          <div class="col">
+            <h2>Vytvořit závod</h2>
+            
+                {form vz, class => "form-group form-horizontal"}
+                   {label jmeno}
+                   {input jmeno, class => "form-control"}
+                   {label start}
+                   {input start, class => "form-control"}
+                   <br><br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+
+            </div>
+              <div class="col">
+            </div>     
+          </div>
+      </div>
+    </section>
+    <script>
+        $(function () {
+            $('#frm-vz-start').datetimepicker();
+          });
+    </script>
+{/block}

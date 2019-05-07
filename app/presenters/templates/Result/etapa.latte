@@ -1,0 +1,58 @@
+{** @author Tomáš Keske *}
+
+{layout "default1.latte"}
+
+{block title}Výsledky etap{/block}
+
+{block obsah}
+    <section id="about">
+      <div class="container">
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">
+                 <img src="/images/logo.png" width="100%" height="100%">
+
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Výsledky etapy</h2>
+            
+            <table class="table table-striped table-responsive-sm">
+              <tr>
+                 <th> Pořadí  </th>
+                 <th> Startovní číslo závodníka </th>
+                 <th> Jméno závodníka </th>
+                 <th> Značka vozu </th>
+                 <th> Objem </th>
+                 <th> Výsledné body </th>
+              </tr>
+              
+              {ifset $results}
+                {var cnt = 1}
+                 
+                 {foreach $results as $key => $polozka}
+                    <tr>
+                        <td>{if $polozka["zavodnik"]->status == null }{$cnt}{else}DSQ{/if}</td>
+                        <td>{$polozka["zavodnik"]->cislo}</td>
+                        <td>{$polozka["zavodnik"]->jmeno}</td>
+                        <td>{$polozka["zavodnik"]->znacka}</td>
+                        <td>{$polozka["zavodnik"]->objem}</td>
+                        <td>{$polozka["body"]}</td>
+                    </tr>
+                    {var cnt = $cnt + 1}
+                 {/foreach}
+               {/ifset}
+            </table>
+           
+
+          </div>
+        </div>
+      </div>
+    </section>
+{/block}

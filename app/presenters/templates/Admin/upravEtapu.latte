@@ -1,0 +1,41 @@
+{** @author Tomáš Keske *}
+
+{layout '../Admin/default1.latte'}
+
+{block title}Upravit etapu{/block}
+{block obsah}
+    <section id="about">
+      <div class="container">
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">
+                 <img src="/images/logo.png" width="100%" height="100%">
+
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">     
+                 <center><a n:href="Admin:zavod $zavod->id" class="btn btn-primary"> << Zpět na závod </a></center>
+            </div>
+             <div class="col">
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Upravit kontrolu: {$etapa->name}</h2>
+            <br><br>
+              {control upravEtapu}
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+{/block}

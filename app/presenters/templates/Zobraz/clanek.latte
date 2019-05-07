@@ -1,0 +1,97 @@
+{** @author Tomáš Keske *}
+
+{layout '../@layout.latte'}
+
+{block title} {$article->title} {/block}
+
+{block content}
+
+    <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">CMS ver 0.1</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+        {if !$user->isLoggedIn()}
+          <li class="nav-item">
+            <a n:href="Homepage:default" class="nav-link js-scroll-trigger">Domů</a>
+          </li>
+          <li class="nav-item">
+            <a n:href="Login:default" class="nav-link js-scroll-trigger">Přihlásit se</a>
+          </li>
+          <li class="nav-item">
+            <a n:href="Registration:default" class="nav-link js-scroll-trigger">Registrace</a>
+          </li>
+          {else}
+            <a n:href="Homepage:default" class="nav-link js-scroll-trigger">Domů</a>
+
+            {if $user->isInRole("admin")}
+              <a n:href="Admin:default" class="nav-link js-scroll-trigger">Administrace</a>
+            {/if}
+
+            <a n:href="Homepage:rss" class="nav-link js-scroll-trigger">RSS</a>
+
+            <a n:href="Homepage:logout" class="nav-link js-scroll-trigger">Odhlásit se ({$user->getIdentity()->data[0]})</a>
+          {/if}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section id="about">
+  <div class="row">
+  <div class="col-lg-8 mx-auto">
+  <h2>{$article->title}</h2>
+  <p class="lead">
+      {$article->text}
+
+      <br><br>
+
+     {if count($article->getObrazy()) > 0 }
+
+            <b>Obrázky:</b> <br>
+            {foreach $article->getObrazy() as $obrazek}
+              <a href="{$basePath}/images/{$obrazek->path}">
+              <img src="{$basePath}/images/{$obrazek->path}" width=150; height=150;></a>
+            {/foreach}
+     {/if}
+     
+  </div>
+  </div>
+
+  <section id="about">
+  <div class="row">
+  <div class="col-lg-8 mx-auto">
+
+  {foreach $flashes as $flash}
+    <div class="alert alert-{$flash->type}">{$flash->message}</div>
+  {/foreach}
+
+  <h2>Komentáře</h2>
+  <p class="lead">
+
+      {if $user->isLoggedIn()}
+       {control komentareForm}
+      {else}
+        Psát komentáře mohou pouze přihlášení uživatelé.
+      {/if}
+
+      <br><br>
+
+      <h2>Diskuze:</h2>
+      {foreach $article->getComents() as $coment}
+        {if $coment->status != "blocked"}
+          Nick: {$coment->nick} &nbsp; Publikováno: {$coment->date}
+          <br>{$coment->obsah}<br>
+        {/if}
+      {/foreach}
+
+  </div>
+  </div>
+  </section>
+  </section>
+
+  {/block}

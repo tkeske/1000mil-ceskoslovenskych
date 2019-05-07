@@ -1,0 +1,54 @@
+{** @author Tomáš Keske *}
+
+{layout "default1.latte"}
+
+{block title}Správce závodů{/block}
+
+{block obsah}
+    <section id="about">
+      <div class="container">
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">
+                 <img src="/images/logo.png" width="100%" height="100%">
+
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Seznam závodů</h2>
+            
+            <table class="table table-striped table-responsive-sm">
+              <tr>
+              <th> Jméno závodu </th>
+              <th> Výsledky etap </th>
+              <th> Výsledky podle kategorií </th>
+              <th> Výsledky podle značkových teamů </th>
+              <th> Celkové výsledky </th>
+              
+
+              </tr>
+              
+              {foreach $zavody as $zavod}
+                  {dump $zavod}
+                <tr><td>{$zavod->balikname}</td>
+                    <td><a n:href="Result:etapy $zavod->id">Zobrazit</a></td>
+                    <td><a n:href="Result:kategorie $zavod->id">Zobrazit</a></td>
+                    <td><a n:href="Result:teamy $zavod->id">Zobrazit</a></td>
+                    <td><a n:href="Result:zavod $zavod->id">Zobrazit</a></td>
+                </tr>
+              {/foreach}
+
+            </table>
+           
+
+          </div>
+        </div>
+      </div>
+    </section>
+{/block}

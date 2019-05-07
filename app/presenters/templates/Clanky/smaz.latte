@@ -1,0 +1,49 @@
+{** @author Tomáš Keske *}
+
+{layout '../Admin/default1.latte'}
+{block title}Smazat články{/block}
+{block obsah}
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Smazat články</h2>
+
+            {foreach $flashes as $flash}
+              <div class="alert alert-{$flash->type}">{$flash->message}</div>
+            {/foreach}
+
+            <table>
+              <tr>
+              <th> Název článku </th>
+              <th> Akce </th>
+              </tr>
+              {foreach $articles as $article}
+                 <tr><td>{$article->title}</td><td> <a n:href="Clanky:delete $article->id">Smazat článek</a></td></tr>
+              {/foreach}
+            </table>
+
+            <br>
+
+            <div class="pagination">
+                {if !$paginator->isFirst()}
+                    <a n:href="smaz, 1">První</a>
+                    &nbsp;|&nbsp;
+                    <a n:href="smaz, $paginator->page-1">Předchozí</a>
+                    &nbsp;|&nbsp;
+                {/if}
+
+                Stránka {$paginator->page} z {$paginator->pageCount}
+
+                {if !$paginator->isLast()}
+                    &nbsp;|&nbsp;
+                    <a n:href="smaz, $paginator->page+1">Další</a>
+                    &nbsp;|&nbsp;
+                    <a n:href="smaz, $paginator->pageCount">Poslední</a>
+                {/if}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{/block}

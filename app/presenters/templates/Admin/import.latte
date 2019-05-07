@@ -1,0 +1,145 @@
+{** @author Tomáš Keske *}
+
+{layout default1.latte}
+
+{block title}Závod: {$name}{/block}
+
+{block obsah}
+    <section id="about">
+      <div class="container">
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">
+                 <img src="/images/logo.png" width="100%" height="100%">
+
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">     
+                 <center> <a n:href="Admin:balik $zavod->balik->id" class="btn btn-primary"> << Zpět na závod </a></center>
+            </div>
+             <div class="col">
+            </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+              <h1>Etapa: {$name} </h1>
+              <br>
+         
+
+
+            </div>
+        </div>
+              
+        <div class="row" >
+          <div class="col-lg-8 mx-auto">
+          <table class="table table-striped table-responsive-sm">
+              <th><a id="import" class="active" href=javascript:importVysledku()>Import výsledků</a></th>
+              <th><a id="vysledky" class="active" href=javascript:vysledky()>Výsledky</a></th>
+          </table>
+          </div>
+        </div>
+              
+        <script>
+            function importVysledku(){
+                $("#import").show();
+                $("#vysledky").show();
+                $("#row0").hide();
+                $("#row1").show();
+                $("#row2").hide();
+            }
+            
+            function vysledky(){
+                $("#import").show();
+                $("#vysledky").show();
+                $("#row0").hide();
+                $("#row1").hide();
+                $("#row2").show();
+            }
+        </script>
+        
+        <br><br>
+        
+        <div class="row" id="row0">
+          <div class="col-lg-8 mx-auto">
+            {foreach $flashes as $flash}
+              <div class="alert alert-{$flash->type}">{$flash->message}</div>
+            {/foreach}
+            <h4>Startovní čas etapy: 
+                {if $zavod->start}
+                    {$zavod->start->format("d.m.Y H:i:s")}
+                {/if}
+            </h4>
+
+
+            </div>
+        </div>
+           
+            <br><br>    
+        <div class="row" id="row1">
+          <div class="col-lg-8 mx-auto">
+              
+            {foreach $control["uploadCsv"]->errors as $error}
+              <div class="alert alert-danger">{$error}</div>
+            {/foreach}
+              
+              <h4> Import výsledků </h4>
+               {form uploadCsv, class => "form-group form-horizontal"}
+                   {label file}
+                   {input file, class => "form-control", style => "width: 35%;"}
+                   <br>
+                   {input submit, class => "btn btn-primary" }
+               {/form}
+
+
+            </div>
+        </div>
+ 
+        {ifset $poradi}
+        <div class="row" id="row2" style="display:none;">
+          <div class="col-lg-8 mx-auto">
+              
+            <h2>Výsledky této etapy: </h2>
+                <br>
+                <table class="table table-striped table-responsive-sm">
+                 <tr>
+                 <th> Pořadí </th>
+
+                 <th> Jméno </th>
+                 <th> Startovní číslo</th>
+                 <th> Značka </th>
+                 <th> Typ vozu </th>
+                 <th> Body </th>
+                 </tr>
+                 
+                 {var cnt = 1}
+                 {foreach $poradi as $polozka}
+                    <tr>
+                        <td>{$cnt}</td>
+                        <td> {$polozka["zavodnik"]->jmeno}</td>
+                        <td> {$polozka["zavodnik"]->cislo}</td>
+                        <td> {$polozka["zavodnik"]->znacka}</td>
+                        <td> {$polozka["body"]}</td>
+                    </tr>
+                    {var cnt = $cnt +1 }
+                 {/foreach}
+               </table>
+
+
+            </div>
+        </div>
+       {/ifset}
+
+        
+        </div>
+      </div>
+    </section>
+{/block}

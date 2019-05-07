@@ -1,0 +1,48 @@
+{** @author Tomáš Keske *}
+
+{layout ../Admin/default1.latte}
+
+{block title}Editovat článek{/block}
+
+{block obsah}
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Editovat článek</h2>
+
+              {foreach $flashes as $flash}
+                <div class="alert alert-{$flash->type}">{$flash->message}</div>
+              {/foreach}
+              
+            	{control clanekForm}
+              
+              <br>
+
+              {if $obrazy}
+                {foreach $obrazy as $obrazek}
+                
+                {var a = [$id, $obrazek->path]}
+
+                  <img src="{$basePath}/images/{$obrazek->path}" width=100; height=100;>&nbsp;
+                  <a n:href="Clanky:smazObrazek (expand) $a">Smazat </a>
+                  
+                {/foreach}
+              {/if}
+
+              {if count($coments) > 0}
+
+                <h2>Komentáře: </h2>
+
+                {foreach $coments as $c}
+                  Nick: {$c->nick} Publikováno: {$c->date} <br>
+                  Sdělení: {$c->obsah} <br> 
+                  <a n:href=":smazKoment $c->id">Smaž komentář</a><br><br>
+                {/foreach}
+
+              {/if}
+          </div>
+        </div>
+      </div>
+    </section>
+{/block}

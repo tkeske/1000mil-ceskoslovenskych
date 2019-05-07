@@ -1,0 +1,19 @@
+{** @author Tomáš Keske *}
+
+{contentType application/xml}
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rss version="2.0">
+    <channel>
+        <title>Tomáš Keske - blog</title>
+        <link>{link //:Homepage:default}</link>
+        <description>Nejnovější články na blogu.</description>
+        <language>cs</language>
+
+        <item n:foreach="$posts as $post">
+            <title>{$post->title}</title>
+            <link>{link //:Zobraz:clanek $post->slug}</link>
+            <description>{$post->text}</description>
+        </item>
+    </channel>
+</rss>

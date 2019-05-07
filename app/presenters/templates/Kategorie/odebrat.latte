@@ -1,0 +1,53 @@
+{** @author Tomáš Keske *}
+
+{layout '../Admin/default1.latte'}
+
+{block title}Odebrat kategorii{/block}
+
+{block obsah}
+<section id="about">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+
+          {foreach $flashes as $flash}
+            <div class="alert alert-{$flash->type}">{$flash->message}</div>
+          {/foreach}
+
+        <h2>Odebrat kategorie</h2>
+        
+        <table>
+          <tr>
+          <th> Jméno kategorie </th>
+          <th> Akce </th>
+          </tr>
+
+       		{foreach $cat as $c}
+       		<tr><td>{$c->jmeno}</td><td> <a n:href="delete, $c->id">Smazat kategorii</a></td></tr>
+       		{/foreach}
+        </table>
+        
+        <br>
+
+        <div class="pagination">
+            {if !$paginator->isFirst()}
+                <a n:href="odebrat, 1">První</a>
+                &nbsp;|&nbsp;
+                <a n:href="odebrat, $paginator->page-1">Předchozí</a>
+                &nbsp;|&nbsp;
+            {/if}
+
+            Stránka {$paginator->page} z {$paginator->pageCount}
+
+            {if !$paginator->isLast()}
+                &nbsp;|&nbsp;
+                <a n:href="odebrat, $paginator->page+1">Další</a>
+                &nbsp;|&nbsp;
+                <a n:href="odebrat, $paginator->pageCount">Poslední</a>
+            {/if}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{/block}

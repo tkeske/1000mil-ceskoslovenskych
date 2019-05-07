@@ -1,0 +1,169 @@
+{** @author Tomáš Keske *}
+
+{layout '../Admin/default1.latte'}
+
+{block title}Uživatelé akce{/block}
+{block obsah}
+    <section id="about">
+      <div class="container">
+          
+                  
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">
+                 <img src="/images/logo.png" width="100%" height="100%">
+
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row" style="padding-bottom: 7%;">
+            <div class="col">
+            </div>
+             <div class="col">     
+                 <center> <a n:href="Admin:default" class="btn btn-primary"> << Zpět na Administraci </a></center>
+            </div>
+             <div class="col">
+            </div>
+        </div>
+          
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+
+            {foreach $flashes as $flash}
+              <div class="alert alert-{$flash->type}">{$flash->message}</div>
+            {/foreach}
+
+            <h2>Seznam uživatelů</h2>
+
+            <table class="table table-striped table-responsive-sm">
+              <tr>
+              <th> Jméno uživatele </th>
+              <th> Stanoviste & Funkce</th>
+              <th> Akce </th>
+              </tr>
+              
+              {foreach $usr as $us}
+                  <tr>
+                      <td>{$us->email}</td>      
+                       {try}
+                       <td>{if isset($us->etapa->name)}{$us->etapa->name}{else}admin{/if}</td>
+                       {/try} 
+                      <td><a n:href="Admin:odebrat $us->id" class="">Odebrat</a></td>
+                  </tr>
+              {/foreach}
+
+            </table>
+            
+            <br>
+          </div>
+        </div>
+              
+        <div class="row">
+        <div class="col-lg-8 mx-auto">
+              {foreach $control["addUziv"]->errors as $error}
+                <div class="alert alert-danger">{$error}</div>
+              {/foreach}
+        </div>
+        </div>
+              
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Přidat uživatele</h2>
+                {form addUziv, class => "form-group form-horizontal"}
+                   {label email}
+                   {input email, class => "form-control", style => "width: 35%;"}
+                   {label pass}
+                   {input pass, class => "form-control", style => "width: 35%;"}
+                   {label pass2}
+                   {input pass2, class => "form-control", style => "width: 35%;"}
+                   {label user}
+                   {input user, class => "form-control"}
+                   
+                   <br>
+                   {input submit, class => "btn btn-primary", id => "posix"}
+                   
+                   {if $render}
+                        <div id="zavod">
+                        {label zavod}
+                        {input zavod, class => "form-control", style => "width: 35%;"}
+                       
+                        {label etapa}
+                        {input etapa, class => "form-control", style => "width: 35%;"}
+                
+                        {label kontrola}
+                        {input kontrola, class => "form-control", style => "width: 35%;"}
+                        </div>
+                    {else}
+                        <div id="zavod" class="notif">
+                            <font color="red"> Pro vytvoření omezeného účtu pro kontrolu
+                            nejprve vytvořte </font><a n:href="Admin:baliky"> Závod </a>, 
+                            <font color="red"> poté přidejte etapu a také kontrolní stanoviště.</font>
+                        <div>
+
+                    {/if}
+               {/form}
+                   
+                <script>
+   
+                  var cnt = 0;
+                  var orig = $("#posix").position();
+                  
+                  function myFunction() {
+                        setTimeout(alertFunc, 100);
+                      }
+
+                    function alertFunc() {
+                        var c = $("#frm-addUziv-user:checked").val();
+                       var pos = $("#posix").position();
+                       
+                       
+                       console.log(c);
+                       console.log(pos);
+                       
+                       if (c){
+                           
+                           var kontrola = $("#frm-addUziv-kontrola");
+                          
+                          if (kontrola){
+                              var kontrolapos = kontrola.position();
+                              var newpos = kontrolapos["top"]+50;
+                              document.getElementById("posix").style.cssText = "position: absolute; top: "+newpos+"px";
+                              cnt = cnt + 1;
+                              
+                            
+                           
+                          } else {
+                              var checkpos = $("#frm-addUziv-user").position();
+                              var newpos = checkpos["top"]+50;
+                              document.getElementById("posix").style.cssText = "position: absolute; top: "+newpos+"px";
+                              cnt = cnt + 1;
+                          }
+                           
+                       } else {
+                           document.getElementById("posix").style.cssText = "position: absolute; top: "+orig["top"]+"px";
+                       }
+                       
+                       //if (cnt == 0){
+                         myFunction();
+                        //}
+                        
+                            var notif = document.getElementsByClassName("notif");
+                    
+                    if(notif[0]){
+                        var neu = orig["top"]+50;
+                        notif[0].style.cssText ="position: absolute; top: "+neu+"px";
+                    }
+                    }
+                    
+                
+                    myFunction();
+                </script>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+{/block}
